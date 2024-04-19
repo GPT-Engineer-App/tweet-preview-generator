@@ -1,0 +1,13 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class TweetThread(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    scheduled_time = models.DateTimeField()
+
+class Tweet(models.Model):
+    thread = models.ForeignKey(TweetThread, related_name='tweets', on_delete=models.CASCADE)
+    text = models.TextField()
+    image_url = models.URLField(null=True, blank=True)
+    sequence = models.IntegerField()
